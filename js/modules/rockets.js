@@ -1,94 +1,155 @@
-export const getMasaRockets = async ()=>{
+export const getAllRockets = async ()=>{
     let res = await fetch("https://api.spacexdata.com/v4/rockets")
     let data = await res.json();
-    let listMasa = []; 
-
-    data.forEach((val, id) => {
-        listMasa.push(val.mass.kg);
-    });
-    
-    listMasa.sort((a,b) => b - a)
-    data.push({
-        kg_max: listMasa.shift(), 
-    });
     return data;
 }
 
-export const getRocketsPayLoadWeights = async ()=>{
-    let res = await fetch("https://api.spacexdata.com/v4/rockets");
-    let data = await res.json();
-    let payLoadWeigth = [];
+export const getMasaRockets = async()=>{
+    let config = {
+        headers:{
+            "content-type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({
+            "options":{
+                "select":{
+                    "name": 1,
+                    "mass": 1
+                },
+            "sort":{
+                "mass.kg": "desc"
+            },
+            "limit": 1
+            }
+        })
 
-    data.forEach((val) =>{
-        payLoadWeigth.push(...val.payload_weights)
-    });
-
-    payLoadWeigth.sort((a,b)=> b.kg - a.kg)
-    data.push({
-        payload_weights: payLoadWeigth.shift().kg,
-    });
-    return data;
+    }
+    let res = await fetch("https://api.spacexdata.com/v4/rockets/query", config);
+    let {docs:[{mass} = maxMassRocket]} = await res.json();
+    return mass;
 }
 
-export const getHeightRockets = async ()=>{
-    let res = await fetch("https://api.spacexdata.com/v4/rockets");
-    let data = await res.json();
-    let heightRockets = [];
+export const getRocketsPayLoadWeights = async()=>{
+    let config = {
+        headers:{
+            "content-type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({
+        
+            "options": {
+                "select": {
+                    "name": 1,
+                    "payload_weights": 1
+                },
+                "sort":{
+                    "payload_weights.kg": "desc"
+                },
+            }
+        })
+    }
+    let res = await fetch("https://api.spacexdata.com/v4/rockets/query", config);
+    let {docs} = await res.json();
+    let data = []
+    docs.forEach(val => data.push(...val.payload_weights))
+    data.sort((a,b) => b.kg - a.kg)
+    let [maxPayloadWeightsRocket] = data;
+    return maxPayloadWeightsRocket;
+}
 
-    data.forEach((val) =>{
-        heightRockets.push(val.height)
-    })
+export const getHeightRockets = async()=>{
+    let config = {
+        headers:{
+            "content-type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({
+            "options":{
+                "select":{
+                    "name": 1,
+                    "height": 1
+                },
+                "sort":{
+                    "height.meters": "desc"
+                }
+            }
+        })
+    }
 
-    heightRockets.sort((a,b) => b.meters - a.meters)
-    data.push({
-        height: heightRockets.shift().meters
-    });
-    return data;
+    let res = await fetch("https://api.spacexdata.com/v4/rockets/query", config);
+    let {docs:[{height} = maxHeightRocket]} = await res.json();
+    return height;
 }
 
 export const getDiameterRockets = async()=>{
-    let res = await fetch("https://api.spacexdata.com/v4/rockets");
-    let data = await res.json();
-    let diameterRocket = [];
+    let config = {
+        headers:{
+            "content-type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({
+            "options":{
+                "select":{
+                    "name": 1,
+                    "diameter": 1
+                },
+            "sort":{
+                "diameter.meters": "desc"
+            }
+            }
+        })
+    }
 
-    data.forEach((val) =>{
-        diameterRocket.push(val.diameter)
-    });
+    let res = await fetch("https://api.spacexdata.com/v4/rockets/query", config)
+    let {docs:[{diameter} = maxdiameterRocket]} = await res.json();
+    return diameter;
+}
+export const getDiameterCompositeRockets = async()=>{     
+    let config = {
+        headers:{
+            "content-type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({
+            "options": {
+                "select":{
+                    "name": 1,
+                    "second_stage": 1
+                }
+            },
+            "sort":{
+                "second_stage.payloads.composite_fairing.diameter.meters": "desc"
+            }
+        })
+    }
 
-    diameterRocket.sort((a,b) => b.meters - a.meters)
-    data.push({
-        diameter: diameterRocket.shift().meters
-    })
-
-    return data;
+    let res = await fetch("https://api.spacexdata.com/v4/rockets/query", config)
+    let {docs:[maxDiameterCompositeFairingRocket ]} = await res.json();
+    let {second_stage: {payloads: {composite_fairing: {diameter}}}} = maxDiameterCompositeFairingRocket
+    return diameter;
 }
 
-export const getDiameterCompositeRockets = async()=>{
-    let res = await fetch("https://api.spacexdata.com/v4/rockets")
-    let data = await res.json();
-    let listaDiameterComposite = [];
+export const getHeightCompositeRockets = async()=>{     
+    let config = {
+        headers:{
+            "content-type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({
+            "options": {
+                "select":{
+                    "name": 1,
+                    "second_stage": 1
+                }
+            },
+            "sort":{
+                "second_stage.payloads.composite_fairing.height.meters": "desc"
+            }
+        })
+    }
 
-    data.forEach((val) =>{
-        listaDiameterComposite.push(val.second_stage.payloads.composite_fairing.diameter)
-    });
-    listaDiameterComposite.sort((a,b) => b.meters - a.meters)
-    data.push({
-        composite_diameter: listaDiameterComposite.shift().meters
-    });
-    return data
-}
-
-export const getHeightCompositeRockets = async()=>{
-    let res = await fetch("https://api.spacexdata.com/v4/rockets")
-    let data = await res.json();
-    let listaHeightComposite = [];
-
-    data.forEach((val) =>{
-        listaHeightComposite.push(val.second_stage.payloads.composite_fairing.height)
-    });
-    listaHeightComposite.sort((a,b) => b.meters - a.meters)
-    data.push({
-        composite_height: listaHeightComposite.shift().meters
-    });
-    return data;
+    let res = await fetch("https://api.spacexdata.com/v4/rockets/query", config)
+    let {docs:[maxHeightCompositeFairingRocket ]} = await res.json();
+    let {second_stage: {payloads: {composite_fairing: {height}}}} = maxHeightCompositeFairingRocket
+    return height;
 }
