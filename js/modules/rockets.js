@@ -4,6 +4,11 @@ export const getAllRockets = async ()=>{
     return data;
 }
 
+export const getAllRocketsId = async (id)=>{
+    let res = await fetch(`https://api.spacexdata.com/v4/rockets/${id}`)
+    let data = await res.json();
+    return data;
+}
 export const getMasaRockets = async()=>{
     let config = {
         headers:{
@@ -112,18 +117,16 @@ export const getDiameterCompositeRockets = async()=>{
         method: "POST",
         body: JSON.stringify({
             "options": {
-                "select":{
-                    "name": 1,
-                    "second_stage": 1
+                "select": {
+                    "second_stage.payloads.composite_fairing.diameter": 1
+                },
+                "sort": {
+                    "second_stage.payloads.composite_fairing.diameter": "desc"
                 }
-            },
-            "sort":{
-                "second_stage.payloads.composite_fairing.diameter.meters": "desc"
             }
         })
     }
-
-    let res = await fetch("https://api.spacexdata.com/v4/rockets/query", config)
+    let res = await fetch("https://api.spacexdata.com/v4/rockets/query", config);
     let {docs:[maxDiameterCompositeFairingRocket ]} = await res.json();
     let {second_stage: {payloads: {composite_fairing: {diameter}}}} = maxDiameterCompositeFairingRocket
     return diameter;
