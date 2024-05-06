@@ -224,7 +224,6 @@ export const informRocketFuelAmountTons= async(fuel_amount_tons)=>{
     divFirst.append(divFirstChildren)
     div.append(divFirst)
     let section__information__3 = document.querySelector("#section__information__3");
-    // section__information__1.innerHTML = "";
     section__information__3.append(div)
 
     // <div class="carousel__item">

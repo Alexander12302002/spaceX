@@ -11,6 +11,10 @@ import {
     informationFirstFlightRocket,
     informationWebRocket
 } from "./information.js";
+import {
+    tableRocketColum1,
+    tableRocketColum2
+} from "./tables.js"
 import { 
     informRocketEngineThrustSeaLevel, 
     informRocketEngineThrustVacuum,
@@ -47,10 +51,6 @@ const getRocketsId = async(e)=>{
     description__item.innerHTML = "";
     let section__image = document.querySelector("#section__image")
     section__image.innerHTML = "";
-    let section__information__2 = document.querySelector("#section__information__2")
-    section__information__2.innerHTML = "";
-    let section__information__3 = document.querySelector("#section__information__3")
-    section__information__3.innerHTML = "";
 
     let Rocket = await getAllRocketsId(e.target.id);
 
@@ -66,8 +66,9 @@ const getRocketsId = async(e)=>{
     await informRocketFirstStageThrustSeaLevel(Rocket.first_stage.thrust_sea_level)
     await informRocketSecondStageThrust(Rocket.second_stage.thrust)
     await informRocketFuelAmountTons(Rocket.first_stage.fuel_amount_tons)
-    await informRocketSecondStageFuelAmountTons(Rocket.second_stage.fuel_amount_tons)
+    //await informRocketSecondStageFuelAmountTons(Rocket.second_stage.fuel_amount_tons)
     await imageRockets(Rocket.flickr_images);
+
 
     await progressRocketWeight(Rocket)
     await progressPayloadWeights(Rocket)
@@ -75,6 +76,11 @@ const getRocketsId = async(e)=>{
     await progressDiameterRocket(Rocket)
     await progressSecondStageDiameterRocket(Rocket)
     await progressSecondStageHeightRocket(Rocket)
+
+    await tableRocketColum1(Rocket)
+    await tableRocketColum2(Rocket)
+
+
 }
 export const paginationRockets = async()=>{
     let rockets = await getAllRockets();
