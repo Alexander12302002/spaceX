@@ -130,13 +130,17 @@ export const informRocketFirstStageThrustSeaLevel = async(thrust_sea_level)=>{
 
     let div = document.createElement('div');
     div.classList.add("carousel__item")
+
     let divFirst = document.createElement('div');
     divFirst.classList.add("item__progress__bar");
     divFirst.style = `background: radial-gradient(closest-side, #1d1f38 85%, transparent 85% 100%), conic-gradient(var(--color--three) ${pocentaje}%, transparent 0)`
+    
     let divFirstChildren = document.createElement('div');
     divFirstChildren.classList.add("progress__value")
+    
     let strong = document.createElement('strong');
     strong.textContent = "Thrust sea    level"
+    
     let smallFirst = document.createElement('small');
     smallFirst.textContent = `${pocentaje.toFixed(2)} %`
     
@@ -149,20 +153,20 @@ export const informRocketFirstStageThrustSeaLevel = async(thrust_sea_level)=>{
     divFirst.append(divFirstChildren)
     div.append(divFirst)
     let section__information__2 = document.querySelector("#section__information__2");
-    // section__information__1.innerHTML = "";
+    section__information__2.innerHTML = "";
     section__information__2.append(div)
 
-    // <div class="carousel__item">
-    //     <div class="item__progress__bar">
-    //         <div class="progress__value">
-    //             <strong>Title</strong>
-    //             <small>3</small>
-    //         </div>
-    //     </div>
-    // </div>
+//     <div class="carousel__item">
+//         <div class="item__progress__bar">
+//             <div class="progress__value">
+//                 <strong>Title</strong>
+//                 <small>3</small>
+//             </div>
+//         </div>
+//     </div>
 }
 
-export const informRocketSecondStageThrust= async(thrust_sea_level)=>{
+export const informRocketSecondStageThrust = async(thrust_sea_level)=>{
     let {kN:totalKN} = await getAllRocketSecondStageThrust();
     let pocentaje = (thrust_sea_level.kN * 100) / totalKN;
 
@@ -187,7 +191,7 @@ export const informRocketSecondStageThrust= async(thrust_sea_level)=>{
     divFirst.append(divFirstChildren)
     div.append(divFirst)
     let section__information__2 = document.querySelector("#section__information__2");
-    // section__information__1.innerHTML = "";
+    section__information__1.innerHTML = "";
     section__information__2.append(div)
 
     // <div class="carousel__item">
@@ -224,6 +228,7 @@ export const informRocketFuelAmountTons= async(fuel_amount_tons)=>{
     divFirst.append(divFirstChildren)
     div.append(divFirst)
     let section__information__3 = document.querySelector("#section__information__3");
+    section__information__3.innerHTML = "";
     section__information__3.append(div)
 
     // <div class="carousel__item">
@@ -236,39 +241,39 @@ export const informRocketFuelAmountTons= async(fuel_amount_tons)=>{
     // </div>
 }
 
-export const informRocketSecondStageFuelAmountTons= async(fuel_amount_tons)=>{
-    let TotalTons = await getAllRocketsSecondStageFuelAmountTons();
-    let pocentaje = (fuel_amount_tons * 100) / TotalTons;
+// export const informRocketSecondStageFuelAmountTons= async(fuel_amount_tons)=>{
+//     let TotalTons = await getAllRocketsSecondStageFuelAmountTons();
+//     let pocentaje = (fuel_amount_tons * 100) / TotalTons;
 
-    let div = document.createElement('div');
-    div.classList.add("carousel__item")
-    let divFirst = document.createElement('div');
-    divFirst.classList.add("item__progress__bar");
-    divFirst.style = `background: radial-gradient(closest-side, #1d1f38 85%, transparent 85% 100%), conic-gradient(var(--color--three) ${pocentaje}%, transparent 0)`
-    let divFirstChildren = document.createElement('div');
-    divFirstChildren.classList.add("progress__value")
-    let strong = document.createElement('strong');
-    strong.textContent = "Second Stage Fuel Amount Tons"
-    let smallFirst = document.createElement('small');
-    smallFirst.textContent = `${pocentaje.toFixed(2)} %`    
+//     let div = document.createElement('div');
+//     div.classList.add("carousel__item")
+//     let divFirst = document.createElement('div');
+//     divFirst.classList.add("item__progress__bar");
+//     divFirst.style = `background: radial-gradient(closest-side, #1d1f38 85%, transparent 85% 100%), conic-gradient(var(--color--three) ${pocentaje}%, transparent 0)`
+//     let divFirstChildren = document.createElement('div');
+//     divFirstChildren.classList.add("progress__value")
+//     let strong = document.createElement('strong');
+//     strong.textContent = "Second Stage Fuel Amount Tons"
+//     let smallFirst = document.createElement('small');
+//     smallFirst.textContent = `${pocentaje.toFixed(2)} %`    
     
-    let smallLast = document.createElement('small');
-    let Tons = new Intl.NumberFormat('cop').format(fuel_amount_tons)
-    smallLast.innerHTML = `${Tons} Tons <br>`
+//     let smallLast = document.createElement('small');
+//     let Tons = new Intl.NumberFormat('cop').format(fuel_amount_tons)
+//     smallLast.innerHTML = `${Tons} Tons <br>`
 
-    divFirstChildren.append(strong, smallFirst, smallLast)
-    divFirst.append(divFirstChildren)
-    div.append(divFirst)
-    let section__information__3 = document.querySelector("#section__information__3");
-    // section__information__1.innerHTML = "";
-    section__information__3.append(div)
+//     divFirstChildren.append(strong, smallFirst, smallLast)
+//     divFirst.append(divFirstChildren)
+//     div.append(divFirst)
+//     let section__information__3 = document.querySelector("#section__information__3");
+//     section__information__3.innerHTML = "";
+//     section__information__3.append(div)
 
-    // <div class="carousel__item">
-    //     <div class="item__progress__bar">
-    //         <div class="progress__value">
-    //             <strong>Title</strong>
-    //             <small>3</small>
-    //         </div>
-    //     </div>
-    // </div>
-}
+//     // <div class="carousel__item">
+//     //     <div class="item__progress__bar">
+//     //         <div class="progress__value">
+//     //             <strong>Title</strong>
+//     //             <small>3</small>
+//     //         </div>
+//     //     </div>
+//     // </div>
+// }
